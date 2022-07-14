@@ -30,6 +30,31 @@ class DetailViewController: UIViewController {
         setupCard()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        verifyDeviceOrientation()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        verifyDeviceOrientation()
+    }
+    
+    func verifyDeviceOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            statFirstLabel.isHidden = true
+            statSecondLabel.isHidden = true
+            statThirdLabel.isHidden = true
+            statQuarterLabel.isHidden = true
+        } else {
+            print("Portrait")
+            statFirstLabel.isHidden = false
+            statSecondLabel.isHidden = false
+            statThirdLabel.isHidden = false
+            statQuarterLabel.isHidden = false
+        }
+    }
+    
     func setupLabels() {
         guard let pokemon = viewModel.pokemonSelected else { return }
         for index in 0...3 {

@@ -173,8 +173,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let orientation = UIApplication.shared.statusBarOrientation
+        if(orientation == .landscapeLeft || orientation == .landscapeRight)
+        {
+            return CGSize(width: collectionView.frame.size.width/4, height: collectionView.frame.size.height/1)
+        }
+        else{
+            return CGSize(width: collectionView.frame.size.width/2.3, height: collectionView.frame.size.height/1)
+        }
         
-        return CGSize(width: collectionView.frame.size.width/2.3, height: collectionView.frame.size.height/1)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
