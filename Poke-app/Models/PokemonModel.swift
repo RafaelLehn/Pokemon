@@ -41,7 +41,6 @@ struct PokemonSelected : Codable {
     var sprites: PokemonSprites
     let species: Species
     var types: [Category]
-    var image: UIImage?
     var primaryColor: UIColor?
     let stats: [Stats]
     

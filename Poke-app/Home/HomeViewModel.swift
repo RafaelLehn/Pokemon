@@ -34,7 +34,7 @@ class HomeViewModel {
                 return
             }
 
-            guard let pokemonSelected = pokemonSelected else {
+            guard var pokemonSelected = pokemonSelected else {
                 return
             }
 
@@ -44,6 +44,9 @@ class HomeViewModel {
                 self.delegate?.returnError()
                 return
             }
+            
+            
+            pokemonSelected.primaryColor = UIColor().pokemonColor(color: pokemonSelected.types.last?.type.name ?? "")
             
             self.pokemonPathURL = pokemon.next
             self.pokemonList.append(pokemonSelected)

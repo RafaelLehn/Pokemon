@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class PokemonService {
     
@@ -55,7 +54,7 @@ class PokemonService {
                 }
                 DispatchQueue.main.async {
                     for pokemon in newLista {
-                        self.getSprite(url: pokemon.url) { newPokemon in
+                        self.getPokemon(url: pokemon.url) { newPokemon in
                             
                             completion(result, newPokemon, nil)
                         }
@@ -67,60 +66,20 @@ class PokemonService {
         }
     }
     
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    
-    func downloadImage(from url: URL, completion:@escaping (UIImage) -> ()) {
-        print("Download Started")
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
-            // always update the UI from the main thread
-            DispatchQueue.main.async() { [weak self] in
-                completion(UIImage(data: data)!)
-            }
-        }
-    }
-    
-    func getSprite(url: String, completion:@escaping (PokemonSelected) -> ()) {
+    func getPokemon(url: String, completion:@escaping (PokemonSelected) -> ()) {
         guard let url = URL(string: url) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             
             print(data)
-            var pokemon = try! JSONDecoder().decode(PokemonSelected.self, from: data)
+            let pokemon = try! JSONDecoder().decode(PokemonSelected.self, from: data)
             
             DispatchQueue.main.async {
-                self.downloadImage(from: URL(string: pokemon.sprites.front_default!)!) { image in
-                    
-                    pokemon.image = image
-                    pokemon.primaryColor = UIColor().pokemonColor(color: pokemon.types.last?.type.name ?? "")
-                    
-                    completion(pokemon)
-                }
+                completion(pokemon)
             }
         }.resume()
     }
     
     
-}
-
-extension UIColor {
-    func pokemonColor(color: String) -> UIColor{
-        switch color {
-        case "fire": return .systemRed
-        case "poison": return .systemGreen
-        case "water": return .systemBlue
-        case "eletric": return .systemYellow
-        case "psychic": return .systemPurple
-        case "normal": return .systemOrange
-        case "ground": return .systemGray
-        case "flying": return .systemTeal
-        case "fairy": return .systemPink
-        default: return .systemIndigo
-        }
-    }
 }

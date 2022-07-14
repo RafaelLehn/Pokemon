@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PokemonCollectionViewCell: UICollectionViewCell {
     
@@ -17,7 +18,7 @@ class PokemonCollectionViewCell: UICollectionViewCell {
     func updateCell(pokemon: PokemonSelected) {
         
         pokemonNameLabel.text = pokemon.name
-        pokemonImageView.image = pokemon.image
+        KF.url(URL(string: pokemon.sprites.front_default!)).set(to: pokemonImageView)
         pokemonCategoryLabel.text = pokemon.types.last?.type.name
         categoryBackgroundView.layer.cornerRadius = 10
         

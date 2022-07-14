@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailViewController: UIViewController {
     
@@ -24,18 +25,13 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let pokemon = viewModel.pokemon else {
-            return
-        }
-        
-        self.navigationController?.navigationBar.tintColor = pokemon.primaryColor
-        
-        
-        setupLabels(pokemon: pokemon)
-        setupCard(pokemon: pokemon)
+        self.navigationController?.navigationBar.tintColor = viewModel.returnPrimaryCollor()
+        setupLabels()
+        setupCard()
     }
     
-    func setupLabels(pokemon: PokemonSelected) {
+    func setupLabels() {
+        guard let pokemon = viewModel.pokemonSelected else { return }
         for index in 0...3 {
             let statusName = pokemon.stats[index].stat.name
             let baseStat = pokemon.stats[index].base_stat
@@ -51,14 +47,14 @@ class DetailViewController: UIViewController {
 
         pokemonNameLabel.text = pokemon.name
         pokemonCategoryLabel.text = "Type: \(pokemon.types.last!.type.name)"
-        pokemonImageView.image = pokemon.image
+        KF.url(URL(string: pokemon.sprites.front_default!)).set(to: pokemonImageView)
     }
     
-    func setupCard(pokemon: PokemonSelected) {
-        cardPokemonView.backgroundColor = pokemon.primaryColor
+    func setupCard() {
+        cardPokemonView.backgroundColor = viewModel.returnPrimaryCollor()
         cardPokemonView.layer.cornerRadius = cardPokemonView.layer.frame.width/10
         cardPokemonView.layer.borderWidth = 0.0
-        cardPokemonView.layer.shadowColor = pokemon.primaryColor?.cgColor
+        cardPokemonView.layer.shadowColor = viewModel.returnPrimaryCollor().cgColor
         cardPokemonView.layer.shadowOffset = CGSize(width: 0, height: 0)
         cardPokemonView.layer.shadowRadius = 7.0
         cardPokemonView.layer.shadowOpacity = 0.9

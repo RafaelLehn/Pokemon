@@ -116,7 +116,7 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" red="0.01232835174" green="0.064975332560000001" blue="0.068076222209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="google"/>
                                 <scopeButtonTitles>
                                     <string>Title</string>
                                     <string>Title</string>

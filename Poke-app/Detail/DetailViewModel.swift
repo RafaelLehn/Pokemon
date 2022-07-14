@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 class DetailViewModel {
-    var pokemon: PokemonSelected?
+    var pokemonSelected: PokemonSelected?
     
-    
+    func returnPrimaryCollor() -> UIColor {
+        return pokemonSelected?.primaryColor ?? .white
+    }
 }

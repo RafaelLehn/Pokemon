@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ViewController: UIViewController {
     
@@ -54,7 +55,7 @@ class ViewController: UIViewController {
         if let detail = segue.destination as? DetailViewController,
            let object = sender as? PokemonSelected {
             
-            detail.viewModel.pokemon = object
+            detail.viewModel.pokemonSelected = object
         }
         
     }
@@ -63,9 +64,11 @@ class ViewController: UIViewController {
 extension ViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        viewModel.isSearching = true
-        self.searchBar.showsCancelButton = true
-        viewModel.searchPokemonList = viewModel.pokemonList
+        if viewModel.isSearching == false {
+            viewModel.isSearching = true
+            self.searchBar.showsCancelButton = true
+            viewModel.searchPokemonList = viewModel.pokemonList
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -79,16 +82,18 @@ extension ViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            if searchBar.text! == ""  {
-                collectionView.reloadData()
-            } else {
-                viewModel.searchPokemonList = viewModel.pokemonList.filter({ (pokemon) -> Bool in
-                    return (pokemon.name.localizedCaseInsensitiveContains(String(searchBar.text!)))
-                })
+        if searchBar.text! == ""  {
+            self.viewModel.searchPokemonList = viewModel.pokemonList
             collectionView.reloadData()
-            }
-            
+            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        } else {
+            viewModel.searchPokemonList = viewModel.pokemonList.filter({ (pokemon) -> Bool in
+                return (pokemon.name.localizedCaseInsensitiveContains(String(searchBar.text!)))
+            })
+            collectionView.reloadData()
         }
+        
+    }
 }
 
 extension ViewController: HomeViewModelDelegate {
@@ -144,7 +149,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !viewModel.pokemonList.isEmpty {
-            self.performSegue(withIdentifier: "goToDetail", sender: viewModel.pokemonList[indexPath.item])
+            if viewModel.isSearching {
+                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.searchPokemonList[indexPath.item])
+            } else {
+                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.pokemonList[indexPath.item])
+            }
+            
         }
     }
     
