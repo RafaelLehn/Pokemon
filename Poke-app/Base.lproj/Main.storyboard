@@ -210,6 +210,13 @@
                                             <constraint firstAttribute="height" constant="170" id="hnv-5d-eg5"/>
                                         </constraints>
                                     </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball-logo-DC23868CA1-seeklogo.com" translatesAutoresizingMaskIntoConstraints="NO" id="T8I-m8-ynp">
+                                        <rect key="frame" x="220" y="10" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="Q36-Kr-UQW"/>
+                                            <constraint firstAttribute="height" constant="40" id="h9P-Jn-dkd"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <constraints>
@@ -218,7 +225,9 @@
                                     <constraint firstItem="sPh-IN-Wmh" firstAttribute="top" secondItem="tef-xx-2wn" secondAttribute="bottom" constant="20" id="Exd-ke-a40"/>
                                     <constraint firstItem="sPh-IN-Wmh" firstAttribute="leading" secondItem="B5t-wt-nAJ" secondAttribute="leading" constant="26" id="INP-tB-FVh"/>
                                     <constraint firstItem="deK-UR-aTH" firstAttribute="leading" secondItem="B5t-wt-nAJ" secondAttribute="leading" constant="26" id="ONi-O0-AgY"/>
+                                    <constraint firstAttribute="trailing" secondItem="T8I-m8-ynp" secondAttribute="trailing" constant="10" id="aYL-gu-2zZ"/>
                                     <constraint firstItem="tef-xx-2wn" firstAttribute="top" secondItem="B5t-wt-nAJ" secondAttribute="top" constant="20" id="bED-sw-F6N"/>
+                                    <constraint firstItem="T8I-m8-ynp" firstAttribute="top" secondItem="B5t-wt-nAJ" secondAttribute="top" constant="10" id="dEz-We-o8f"/>
                                     <constraint firstAttribute="bottom" secondItem="deK-UR-aTH" secondAttribute="bottom" constant="20" id="iCH-Hd-jWZ"/>
                                     <constraint firstAttribute="trailing" secondItem="tef-xx-2wn" secondAttribute="trailing" constant="50" id="jHc-US-d1p"/>
                                     <constraint firstItem="tef-xx-2wn" firstAttribute="leading" secondItem="B5t-wt-nAJ" secondAttribute="leading" constant="50" id="jtE-s9-98x"/>
@@ -238,6 +247,7 @@
                     <navigationItem key="navigationItem" id="NiI-B7-ded"/>
                     <connections>
                         <outlet property="cardPokemonView" destination="B5t-wt-nAJ" id="cKc-Gb-2CE"/>
+                        <outlet property="pokeballFavoriteImageView" destination="T8I-m8-ynp" id="yTk-Pa-LzN"/>
                         <outlet property="pokemonCategoryLabel" destination="ikM-l6-O3J" id="YGO-vZ-xAs"/>
                         <outlet property="pokemonImageView" destination="tef-xx-2wn" id="MQh-jX-0ej"/>
                         <outlet property="pokemonNameLabel" destination="sPh-IN-Wmh" id="ZR2-lX-h0u"/>
@@ -257,6 +267,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="pokeball-logo-DC23868CA1-seeklogo.com" width="300" height="300"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

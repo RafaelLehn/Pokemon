@@ -81,5 +81,30 @@ class PokemonService {
         }.resume()
     }
     
+    func sendFavoritePokemonToWebHook(pokemon: PokemonSelected) {
+        var pokemonJson:[String:Any]  = [:]
+        var abilitiesJson:[String:Any]  = [:]
+        var typeJson:[String:Any]  = [:]
+        
+        typeJson["Type:"] = pokemon.stats.last?.stat.name
+        
+        for index in 0...3 {
+            abilitiesJson[(pokemon.stats[index].stat.name)] = pokemon.stats[index].base_stat
+        }
+        
+        pokemonJson["Name:"] = pokemon.name
+        pokemonJson["Abilities:"] = abilitiesJson
+        pokemonJson["Type:"] = typeJson
+        
+        guard let url = URL(string: "https://webhook.site/85294a03-0a6c-488b-b075-3c9176152ca8") else { return }
+        let messageJson: [String: Any] = pokemonJson
+        let jsonData = try? JSONSerialization.data(withJSONObject: messageJson)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "content-type")
+        request.httpBody = jsonData
+        let task = URLSession.shared.dataTask(with: request)
+        task.resume()
+    }
     
 }

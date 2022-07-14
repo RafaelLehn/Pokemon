@@ -148,13 +148,25 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !viewModel.pokemonList.isEmpty {
-            if viewModel.isSearching {
-                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.searchPokemonList[indexPath.item])
-            } else {
-                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.pokemonList[indexPath.item])
-            }
+        let cell = collectionView.cellForItem(at: indexPath)
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+            cell?.contentView.alpha = 0.2
             
+        }) { (completed) in
+            UIView.animate(withDuration: 0.2,
+                           animations: {
+                cell?.contentView.alpha = 1
+            }) { (completed) in
+                if !self.viewModel.pokemonList.isEmpty {
+                    if self.viewModel.isSearching {
+                        self.performSegue(withIdentifier: "goToDetail", sender: self.viewModel.searchPokemonList[indexPath.item])
+                    } else {
+                        self.performSegue(withIdentifier: "goToDetail", sender: self.viewModel.pokemonList[indexPath.item])
+                    }
+                    
+                }
+            }
         }
     }
     
