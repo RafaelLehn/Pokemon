@@ -148,13 +148,25 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !viewModel.pokemonList.isEmpty {
-            if viewModel.isSearching {
-                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.searchPokemonList[indexPath.item])
-            } else {
-                self.performSegue(withIdentifier: "goToDetail", sender: viewModel.pokemonList[indexPath.item])
-            }
+        let cell = collectionView.cellForItem(at: indexPath)
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+            cell?.contentView.alpha = 0.2
             
+        }) { (completed) in
+            UIView.animate(withDuration: 0.2,
+                           animations: {
+                cell?.contentView.alpha = 1
+            }) { (completed) in
+                if !self.viewModel.pokemonList.isEmpty {
+                    if self.viewModel.isSearching {
+                        self.performSegue(withIdentifier: "goToDetail", sender: self.viewModel.searchPokemonList[indexPath.item])
+                    } else {
+                        self.performSegue(withIdentifier: "goToDetail", sender: self.viewModel.pokemonList[indexPath.item])
+                    }
+                    
+                }
+            }
         }
     }
     
@@ -173,8 +185,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let orientation = UIApplication.shared.statusBarOrientation
+        if(orientation == .landscapeLeft || orientation == .landscapeRight)
+        {
+            return CGSize(width: collectionView.frame.size.width/4, height: collectionView.frame.size.height/1)
+        }
+        else{
+            return CGSize(width: collectionView.frame.size.width/2.3, height: collectionView.frame.size.height/1)
+        }
         
-        return CGSize(width: collectionView.frame.size.width/2.3, height: collectionView.frame.size.height/1)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

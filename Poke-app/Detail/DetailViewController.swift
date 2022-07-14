@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var statSecondLabel: UILabel!
     @IBOutlet weak var statThirdLabel: UILabel!
     @IBOutlet weak var statQuarterLabel: UILabel!
+    @IBOutlet weak var pokeballFavoriteImageView: UIImageView!
     
     @IBOutlet private var labels: [UILabel]!
     
@@ -28,6 +29,30 @@ class DetailViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = viewModel.returnPrimaryCollor()
         setupLabels()
         setupCard()
+        setupGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        verifyDeviceOrientation()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        verifyDeviceOrientation()
+    }
+    
+    func verifyDeviceOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            statFirstLabel.isHidden = true
+            statSecondLabel.isHidden = true
+            statThirdLabel.isHidden = true
+            statQuarterLabel.isHidden = true
+        } else {
+            statFirstLabel.isHidden = false
+            statSecondLabel.isHidden = false
+            statThirdLabel.isHidden = false
+            statQuarterLabel.isHidden = false
+        }
     }
     
     func setupLabels() {
@@ -61,7 +86,28 @@ class DetailViewController: UIViewController {
         cardPokemonView.layer.masksToBounds = false
     }
     
+    func setupGesture() {
+        let pokeballTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(withdrawalMoreClick(tapGestureRecognizer:)))
+        
+        pokeballFavoriteImageView.addGestureRecognizer(pokeballTapGestureRecognizer)
+        pokeballFavoriteImageView.isUserInteractionEnabled = true
+    }
     
+    @objc func withdrawalMoreClick(tapGestureRecognizer: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.2,
+                       animations: {
+            //Fade-out
+            self.pokeballFavoriteImageView?.alpha = 0.4
+        }) { (completed) in
+            UIView.animate(withDuration: 0.2,
+                           animations: {
+                //Fade-out
+                self.pokeballFavoriteImageView?.alpha = 1
+            }) { (completed) in
+                self.viewModel.sendPokemonToWebHook()
+            }
+        }
+    }
 
 
 }
