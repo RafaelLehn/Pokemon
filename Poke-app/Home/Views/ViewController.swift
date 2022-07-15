@@ -172,7 +172,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if !viewModel.isSearching {
-            if (indexPath.item == viewModel.pokemonList.count - 1 ) { //it's your last cell
+            if (indexPath.row == viewModel.pokemonList.count - 1 ) { //it's your last cell
                 //Load more data & reload your collection view
                 self.fetchPokemonsStart()
                 collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
