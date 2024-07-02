@@ -30,6 +30,8 @@ class DetailViewController: UIViewController {
         setupLabels()
         setupCard()
         setupGesture()
+        newSetup()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +55,10 @@ class DetailViewController: UIViewController {
             statThirdLabel.isHidden = false
             statQuarterLabel.isHidden = false
         }
+    }
+    
+    func newSetup() {
+        pokemonNameLabel.text = "novo texto"
     }
     
     func setupLabels() {
